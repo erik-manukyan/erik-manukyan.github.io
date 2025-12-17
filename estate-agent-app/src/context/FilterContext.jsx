@@ -1,10 +1,12 @@
-import { createContext, useState, useContext } from "react";
-
-// Create the context
-const FilterContext = createContext();
+import { useState } from "react";
+import { FilterContext } from "./filterContext";
 
 // Create the provider component
 export function FilterProvider({ children }) {
+  const [showFilters, setShowFilters] = useState(false);
+
+  const [hasSearched, setHasSearched] = useState(false);
+
   const [filters, setFilters] = useState({
     propertyType: "",
     minBedrooms: "",
@@ -38,18 +40,17 @@ export function FilterProvider({ children }) {
 
   return (
     <FilterContext.Provider
-      value={{ filters, handleFilterChange, resetFilters }}
+      value={{
+        filters,
+        handleFilterChange,
+        resetFilters,
+        showFilters,
+        setShowFilters,
+        hasSearched,
+        setHasSearched,
+      }}
     >
       {children}
     </FilterContext.Provider>
   );
-}
-
-// Custom hook to use the context
-export function useFilters() {
-  const context = useContext(FilterContext);
-  if (!context) {
-    throw new Error("useFilters must be used within FilterProvider");
-  }
-  return context;
 }

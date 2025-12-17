@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ImageCard from "./ImageCard/ImageCard";
-import { useFilters } from "../../context/FilterContext";
+import { useFilters } from "../../hooks/useFilters";
 
 export default function Gallery() {
   const { filters } = useFilters();

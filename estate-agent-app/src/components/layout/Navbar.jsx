@@ -1,9 +1,19 @@
 import { Link } from "react-router-dom";
+import { useFilters } from "../../hooks/useFilters";
 
 export default function Navbar() {
+  const { setShowFilters, resetFilters } = useFilters();
+
   return (
     <nav className="navbar navbar-light bg-light justify-content-between shadow-lg">
-      <Link className="navbar-brand" to="/">
+      <Link
+        className="navbar-brand"
+        to="/"
+        onClick={() => {
+          setShowFilters ? setShowFilters(false) : null;
+          resetFilters()
+        }}
+      >
         <img
           src="./images/main-icon.png"
           className="d-inline-block align-top px-2 rounded"

@@ -1,4 +1,4 @@
-import { useFilters } from "../../context/FilterContext";
+import { useFilters } from "../../hooks/useFilters";
 import FormSelect from "../common/FormSelect";
 
 // Configuration data

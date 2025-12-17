@@ -1,14 +1,14 @@
 import Navbar from "./components/layout/Navbar";
 import "./bootstrap.css";
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import RefinedSearch from "./components/search/RefinedSearch";
 import SearchBox from "./components/search/SearchBox";
 import Gallery from "./components/properties/Gallery";
 import SearchResultsPage from "./components/pages/SearchResultsPage";
+import { useFilters } from "./hooks/useFilters";
 
 function App() {
-  const [showFilters, setShowFilters] = useState(false);
+  const { showFilters } = useFilters();
 
   return (
     <div>
@@ -19,11 +19,10 @@ function App() {
           element={
             <>
               {!showFilters ? (
-                <SearchBox setShowFilters={setShowFilters} />
+                <SearchBox />
               ) : (
                 <>
                   <RefinedSearch />
-                  <Gallery />
                 </>
               )}
             </>
