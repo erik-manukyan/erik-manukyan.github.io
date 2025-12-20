@@ -13,14 +13,8 @@ export default function SearchResultsPage() {
       <div className="container-fluid">
         <div className="row">
           {/* Left Side - Gallery */}
-          <div className="col-md-8">
+          <div className="col-md-12">
             <Gallery />
-          </div>
-
-          {/* Right Side - Cart (top) and Favourites (bottom) */}
-          <div className="col-md-4">
-            <Cart />
-            <Favourites />
           </div>
         </div>
       </div>

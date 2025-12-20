@@ -6,33 +6,55 @@ export default function ImageCard({ property }) {
     tenure,
     description,
     location,
-    picture,
+    images,
     added,
   } = property;
 
+  const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
+  const sentences = [...segmenter.segment(description)];
   return (
-    <section className="card ">
-      <img
-        src={picture}
-        alt={type + " " + location}
-        className="card-image-top"
-        height={100}
-        width={100}
-      />
-      <div className="card-header">
-        <h4>
-          <span className="material-symbols-outlined">location_on</span>
-          {location}
-        </h4>
+    <section className="card shadow-sm h-100 my-1">
+      <div className="row g-0">
+        <div className="col-md-4 border-end d-flex flex-column">
+          <img
+            src={images[0]}
+            alt={`${type} in ${location}`}
+            className="img-fluid rounded-start"
+          />
+          <div className="p-3 border-top">
+            <p className="fw-bold fs-5 text-primary mb-0">£{price}</p>
+          </div>
+        </div>
+
+        <div className="col-md-8 d-flex flex-column">
+          <div className="card-body pb-0">
+            <h4 className="card-title d-flex align-items-center gap-2 mb-3">
+<i class="fa-solid fa-location-dot"></i>
+              <span>{location}</span>
+            </h4>
+
+            <div className="d-flex flex-wrap gap-4 text-muted small mb-3">
+              <span>
+                <strong className="text-body">Type:</strong> {type}
+              </span>
+              <span>
+                <strong className="text-body">Beds:</strong> {bedrooms}
+              </span>
+              <span>
+                <strong className="text-body">Tenure:</strong> {tenure}
+              </span>
+            </div>
+
+            <p className="card-text text-muted">{sentences.slice(0, 2).map(s => s.segment).join('')}</p>
+          </div>
+
+          <div className="card-footer bg-transparent border-0 mt-auto pt-0 pb-3">
+            <small className="text-muted">
+              Added: {added.day} {added.month} {added.year}
+            </small>
+          </div>
+        </div>
       </div>
-      <h4>Bedrooms: {bedrooms}</h4>
-      <h4>Price: {price}</h4>
-      <h4>Tenure: {tenure}</h4>
-      <h5>Description: {description}</h5>
-      <h4>
-        Added: {added.day} {added.month}, {added.year}
-      </h4>
-      <button>Add to Favourites</button>
     </section>
   );
 }

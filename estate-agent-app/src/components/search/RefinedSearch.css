@@ -2,8 +2,6 @@
   animation: slideInDown 1s ease-out forwards;
 }
 
-
-
 @keyframes slideInDown {
   from {
     opacity: 0;
@@ -17,4 +15,22 @@
 
 .refined-search-container {
   overflow: hidden;
+}
+
+.search-form--mini {
+  padding: 0.25rem 0;
+}
+
+.search-form--mini .form-label {
+  margin-bottom: 0.25rem;
+}
+
+.search-form--mini .input-group,
+.search-form--mini .form-control,
+.search-form--mini .form-select {
+  min-height: 2.75rem;
+}
+
+.search-form--mini button.btn {
+  min-height: 2.75rem;
 }

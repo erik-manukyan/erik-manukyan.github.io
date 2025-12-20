@@ -16,8 +16,8 @@ export default function SearchBox() {
         }}
       >
         <div className="container my-2">
-          <div className="row">
-            <div className="col-md-6 mx-auto">
+          <div className="row justify-content-center">
+            <div className="col-md-6">
               <div className="input-group">
                 <input
                   type="text"
@@ -31,7 +31,7 @@ export default function SearchBox() {
                   placeholder="Ex. London, Edinburgh"
                 />
                 <button type="submit" className="btn btn-primary rounded-end">
-                  Search
+                  <i className="fa-solid fa-magnifying-glass"></i>
                 </button>
               </div>
             </div>
