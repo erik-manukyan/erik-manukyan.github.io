@@ -14,7 +14,18 @@
 }
 
 .refined-search-container {
-  overflow: hidden;
+  overflow: visible;
+  max-width: "600px";
+  margin: "40px auto"
+}
+
+.rw-popup {
+  z-index: 2000 !important;
+}
+
+.rw-popup-container {
+  position: absolute;
+  z-index: 2000;
 }
 
 .search-form--mini {

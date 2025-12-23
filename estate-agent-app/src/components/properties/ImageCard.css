@@ -1,0 +1,116 @@
+.image-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 220px;
+  cursor: grab;
+}
+
+.image-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.image-card.dragging {
+  opacity: 0.5;
+}
+
+.image-card-img {
+  min-height: 220px;
+  max-height: 220px;
+  object-fit: cover;
+}
+
+.image-card-gradient {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+
+.image-card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 4.5em;
+}
+
+/* Mini Card */
+.image-card-mini {
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+  cursor: grab;
+}
+
+.image-card.dragging {
+  opacity: 0;
+}
+
+.image-card-mini.dragging {
+  opacity: 0;
+}
+
+.image-card-mini-overlay {
+  z-index: 2;
+}
+
+/* Favourite Button */
+.favourite-btn {
+  z-index: 10;
+  transition: transform 0.2s;
+}
+
+.favourite-btn:hover {
+  transform: scale(1.2);
+}
+
+.favourite-btn .fa-heart {
+  transition: color 0.2s;
+}
+
+/* Skeleton Card */
+.skeleton-card {
+  min-height: 220px;
+  overflow: hidden;
+}
+
+.skeleton-image {
+  height: 180px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-text {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.skeleton-title {
+  height: 20px;
+  width: 70%;
+  margin-bottom: 12px;
+}
+
+.skeleton-price {
+  height: 24px;
+  width: 40%;
+  margin-bottom: 12px;
+}
+
+.skeleton-line {
+  height: 14px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

@@ -11,11 +11,11 @@ export default function Navbar() {
         to="/"
         onClick={() => {
           setShowFilters ? setShowFilters(false) : null;
-          resetFilters()
+          resetFilters();
         }}
       >
         <img
-          src="./images/main-icon.png"
+          src="/images/main-icon.png"
           className="d-inline-block align-top px-2 rounded"
           alt="Main Logo of the website"
           height={80}

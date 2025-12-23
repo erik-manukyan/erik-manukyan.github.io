@@ -1,16 +1,33 @@
 import React, { useState, useEffect } from "react";
-import ImageCard from "./ImageCard/ImageCard";
+import ImageCard from "./ImageCard";
 import { useFilters } from "../../hooks/useFilters";
+import "./ImageCard.css";
+
+function SkeletonCard() {
+  return (
+    <div className="card shadow-sm skeleton-card">
+      <div className="skeleton-image"></div>
+      <div className="card-body">
+        <div className="skeleton-text skeleton-title"></div>
+        <div className="skeleton-text skeleton-price"></div>
+        <div className="skeleton-text skeleton-line"></div>
+        <div className="skeleton-text skeleton-line short"></div>
+      </div>
+    </div>
+  );
+}
 
 export default function Gallery() {
   const { filters } = useFilters();
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/properties.json");
       const data = await response.json();
       setProperties(data.properties);
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -78,16 +95,21 @@ export default function Gallery() {
     return true;
   });
 
-  return (
-    <div className="container p-1">
-      <div>
-        <h2>Properties</h2>
-        <div className="gallery">
-          {filteredProperties.map((property) => (
-            <ImageCard key={property.id} property={property} />
-          ))}
-        </div>
+  if (loading) {
+    return (
+      <div className="gallery">
+        {[...Array(6)].map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
       </div>
+    );
+  }
+
+  return (
+    <div className="gallery">
+      {filteredProperties.map((property) => (
+        <ImageCard key={property.id} property={property} />
+      ))}
     </div>
   );
 }

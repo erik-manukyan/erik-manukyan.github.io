@@ -1,0 +1,119 @@
+/* Hero Image */
+.hero-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.hero-image--small {
+  max-height: 350px;
+}
+
+/* Gallery Navigation Buttons */
+.gallery-nav-btn {
+  width: 60px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.gallery-nav-btn--prev {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+}
+
+.gallery-nav-btn--prev:hover {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.gallery-nav-btn--next {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
+}
+
+.gallery-nav-btn--next:hover {
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+}
+
+/* Thumbnails */
+.thumbnail {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.thumbnail--small {
+  width: 60px;
+  height: 45px;
+}
+
+.thumbnail:hover {
+  opacity: 1 !important;
+}
+
+/* Tab Content */
+.property-tabs .react-tabs__tab-panel {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.property-description {
+  line-height: 1.8;
+}
+
+.floor-plan-image {
+  max-height: 200px;
+  max-width: 100%;
+  height: auto;
+}
+
+.map-iframe {
+  border: 0;
+}
+
+/* Favourite Button Animation */
+.btn-favourite-animate {
+  position: relative;
+}
+
+.btn-favourite-animate:active {
+  animation: shake 0.4s ease-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+/* Added Message */
+.added-message {
+  animation: fadeOut 1s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}

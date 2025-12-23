@@ -4,7 +4,6 @@ import { FilterContext } from "./filterContext";
 // Create the provider component
 export function FilterProvider({ children }) {
   const [showFilters, setShowFilters] = useState(false);
-
   const [hasSearched, setHasSearched] = useState(false);
 
   const [filters, setFilters] = useState({

@@ -6,6 +6,7 @@ import SearchBox from "./components/search/SearchBox";
 import Gallery from "./components/properties/Gallery";
 import SearchResultsPage from "./components/pages/SearchResultsPage";
 import { useFilters } from "./hooks/useFilters";
+import PropertyDetails from "./components/properties/PropertyDetails";
 
 function App() {
   const { showFilters } = useFilters();
@@ -29,6 +30,7 @@ function App() {
           }
         />
         <Route path="/search-results" element={<SearchResultsPage />} />
+        <Route path="/properties/:id" element={<PropertyDetails />} />
       </Routes>
     </div>
   );

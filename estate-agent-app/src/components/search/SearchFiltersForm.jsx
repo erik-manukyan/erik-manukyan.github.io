@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import FormSelect from "../common/FormSelect";
-import RangeSelect from "../common/RangeSelect";
+import { DropdownList, Combobox } from "react-widgets";
+import "react-widgets/styles.css";
 import { useFilters } from "../../hooks/useFilters";
+import { useState, useEffect } from "react";
 
 // Shared configuration data
 const propertyTypes = [
@@ -35,10 +36,13 @@ const dateOptions = [
 ];
 
 export default function SearchFiltersForm({ variant = "full" }) {
-  const { filters, handleFilterChange, setHasSearched } = useFilters();
+  const { filters, resetFilters, handleFilterChange, setHasSearched } =
+    useFilters();
   const navigate = useNavigate();
 
   const isMini = variant === "mini";
+  const [postcodeList, setPostcodeList] = useState([]);
+  const [locationList, setLocationList] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,117 +50,188 @@ export default function SearchFiltersForm({ variant = "full" }) {
     navigate("/search-results");
   };
 
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        const res = await fetch("/properties.json");
+        const json = await res.json();
+        const props = json.properties || [];
+
+        const postcodes = new Set();
+        const locations = new Set();
+
+        props.forEach((p) => {
+          if (p.location) {
+            locations.add(p.location);
+            const parts = p.location.trim().split(/\s+/);
+            const last = parts[parts.length - 1];
+            if (last && /[A-Za-z0-9]/.test(last)) postcodes.add(last);
+          }
+        });
+
+        if (mounted) {
+          setPostcodeList([...postcodes]);
+          setLocationList([...locations]);
+        }
+      } catch (e) {
+        console.error("Failed to load properties.json:", e);
+      }
+    };
+    load();
+    return () => (mounted = false);
+  }, []);
+
   if (isMini) {
     return (
       <form className="search-form search-form--mini" onSubmit={handleSubmit}>
-        <div className="row g-2 align-items-end">
-          <div className="col-auto">
-            <FormSelect
-              id={`propertyType-${variant}`}
-              label="Type"
-              value={filters.propertyType}
-              onChange={(e) =>
-                handleFilterChange("propertyType", e.target.value.trim())
-              }
-              options={propertyTypes}
-              placeholder="Any"
-            />
-          </div>
-
-          <div className="col-auto">
-            <FormSelect
-              id={`minPrice-${variant}`}
-              label="Min Price"
-              value={filters.minPrice}
-              onChange={(e) => handleFilterChange("minPrice", e.target.value)}
-              options={priceOptions}
-              placeholder="Min"
-            />
-          </div>
-
-          <div className="col-auto">
-            <FormSelect
-              id={`maxPrice-${variant}`}
-              label="Max Price"
-              value={filters.maxPrice}
-              onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
-              options={priceOptions}
-              placeholder="Max"
-            />
-          </div>
-
-          <div className="col-auto">
-            <label htmlFor={`postcode-area-${variant}`} className="form-label">
-              Postcode
+        <div className="row">
+          <div className="col-md-2">
+            <label htmlFor={`propertyType-${variant}`} className="form-label">
+              Type
             </label>
-            <input
-              id={`postcode-area-${variant}`}
-              type="text"
-              value={filters.postcodeArea}
-              onChange={(e) =>
-                handleFilterChange("postcodeArea", e.target.value)
+            <DropdownList
+              data={propertyTypes}
+              id={`propertyType-${variant}`}
+              value={
+                propertyTypes.find((o) => o.value === filters.propertyType) ||
+                null
               }
-              className="form-control"
-              placeholder="SW1"
-              style={{ width: "80px" }}
+              onChange={(val) =>
+                handleFilterChange("propertyType", val ? val.value : "")
+              }
+              textField="label"
+              placeholder="Any"
+              style={{ minWidth: 90 }}
             />
           </div>
-
-          <div className="col-auto">
-            <FormSelect
-              id={`minBedrooms-${variant}`}
-              label="Min Beds"
-              value={filters.minBedrooms}
-              onChange={(e) =>
-                handleFilterChange("minBedrooms", e.target.value)
+          <div className="col-md-2">
+            <label htmlFor={`minPrice-${variant}`} className="form-label">
+              Min Price
+            </label>
+            <DropdownList
+              data={priceOptions}
+              id={`minPrice-${variant}`}
+              value={
+                priceOptions.find((o) => o.value === filters.minPrice) || null
               }
-              options={bedroomOptions}
+              onChange={(val) =>
+                handleFilterChange("minPrice", val ? val.value : "")
+              }
+              textField="label"
               placeholder="Min"
             />
           </div>
-
-          <div className="col-auto">
-            <FormSelect
-              id={`maxBedrooms-${variant}`}
-              label="Max Beds"
-              value={filters.maxBedrooms}
-              onChange={(e) =>
-                handleFilterChange("maxBedrooms", e.target.value)
+          <div className="col-md-2">
+            <label htmlFor={`maxPrice-${variant}`} className="form-label">
+              Max Price
+            </label>
+            <DropdownList
+               data={priceOptions}
+              id={`maxPrice-${variant}`}
+              value={
+                priceOptions.find((o) => o.value === filters.maxPrice) || null
               }
-              options={bedroomOptions}
+              onChange={(val) =>
+                handleFilterChange("maxPrice", val ? val.value : "")
+              }
+              textField="label"
               placeholder="Max"
+              style={{ minWidth: 90 }}
             />
           </div>
 
-          <div className="col-auto">
-            <FormSelect
-              id={`added-${variant}`}
-              label="Added"
-              value={filters.dateAdded}
-              onChange={(e) => handleFilterChange("dateAdded", e.target.value)}
-              options={dateOptions}
+          <div className="col-md-2">
+            <label className="form-label">Min Beds</label>
+            <DropdownList
+              className="form-control"
+              containerClassName="w-100"
+              data={bedroomOptions}
+              value={
+                bedroomOptions.find((o) => o.value === filters.minBedrooms) ||
+                null
+              }
+              onChange={(val) =>
+                handleFilterChange("minBedrooms", val ? val.value : "")
+              }
+              textField="label"
+              placeholder="Min"
+              style={{ minWidth: 70 }}
+            />
+          </div>
+          <div className="col-md-2">
+            <label className="form-label">Max Beds</label>
+            <DropdownList
+              className="form-control"
+              containerClassName="w-100"
+              data={bedroomOptions}
+              value={
+                bedroomOptions.find((o) => o.value === filters.maxBedrooms) ||
+                null
+              }
+              onChange={(val) =>
+                handleFilterChange("maxBedrooms", val ? val.value : "")
+              }
+              textField="label"
+              placeholder="Max"
+              style={{ minWidth: 70 }}
+            />
+          </div>
+          <div className="col-md-2">
+            <label className="form-label">Added</label>
+            <DropdownList
+              className="form-control"
+              containerClassName="w-100"
+              data={dateOptions}
+              value={
+                dateOptions.find((o) => o.value === filters.dateAdded) || null
+              }
+              onChange={(val) =>
+                handleFilterChange("dateAdded", val ? val.value : "")
+              }
+              textField="label"
               placeholder="Any"
+              style={{ minWidth: 90 }}
             />
           </div>
-
-          <div className="col">
+        </div>
+        <div className="row">
+          <div className="col-md-3">
+            <label className="form-label">Postcode</label>
+            <Combobox
+              className="form-control"
+              data={postcodeList}
+              id={`postcode-${variant}`}
+              value={filters.postcodeArea}
+              onChange={(val) => handleFilterChange("postcodeArea", val || "")}
+              placeholder="SW1"
+              style={{ minWidth: 70 }}
+            />
+          </div>
+          <div className="col-md-5">
             <label htmlFor={`location-${variant}`} className="form-label">
               Location
             </label>
-            <div className="input-group">
-              <input
-                type="text"
-                id={`location-${variant}`}
-                name="location"
-                value={filters.location}
-                onChange={(e) => handleFilterChange("location", e.target.value)}
-                className="form-control"
-                placeholder="Ex. London, Edinburgh"
-              />
-              <button type="submit" className="btn btn-primary">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </div>
+
+            <Combobox
+              className="form-control"
+              data={locationList}
+              value={filters.location}
+              onChange={(val) => handleFilterChange("location", val || "")}
+              placeholder="Ex. London, Edinburgh"
+              style={{ minWidth: 120 }}
+            />
+          </div>
+
+          <div
+            className="col-md-4"
+            onClick={(e) => {
+              resetFilters(e);
+            }}
+          >
+            <button type="button" className="btn btn-danger">
+              Reset
+            </button>
           </div>
         </div>
       </form>
@@ -166,96 +241,133 @@ export default function SearchFiltersForm({ variant = "full" }) {
   return (
     <form className="search-form search-form--full" onSubmit={handleSubmit}>
       {/* Row 1: Type + Price */}
-      <div className="row g-4 mb-3">
-        <div className="col-md-4">
-          <FormSelect
-            id={`propertyType-${variant}`}
-            label="Property type"
-            value={filters.propertyType}
-            onChange={(e) =>
-              handleFilterChange("propertyType", e.target.value.trim())
+      <div className="row g-3 mb-3">
+        <div className="col-md-2">
+          <label className="form-label">Property type</label>
+          <DropdownList
+            className="form-control p-0"
+            containerClassName="w-100"
+            data={propertyTypes}
+            value={
+              propertyTypes.find((o) => o.value === filters.propertyType) ||
+              null
             }
-            options={propertyTypes}
+            onChange={(val) =>
+              handleFilterChange("propertyType", val ? val.value : "")
+            }
+            textField="label"
             placeholder="Any"
           />
         </div>
-
-        <div className="col-md-8">
-          <RangeSelect
-            label="Price range"
-            minValue={filters.minPrice}
-            maxValue={filters.maxPrice}
-            onMinChange={(e) => handleFilterChange("minPrice", e.target.value)}
-            onMaxChange={(e) => handleFilterChange("maxPrice", e.target.value)}
-            options={priceOptions}
-            minPlaceholder="Min price"
-            maxPlaceholder="Max price"
+        <div className="col-md-2">
+          <label className="form-label">Min price</label>
+          <DropdownList
+            className="form-control p-0"
+            containerClassName="w-100"
+            data={priceOptions}
+            value={
+              priceOptions.find((o) => o.value === filters.minPrice) || null
+            }
+            onChange={(val) =>
+              handleFilterChange("minPrice", val ? val.value : "")
+            }
+            textField="label"
+            placeholder="Min price"
+          />
+        </div>
+        <div className="col-md-2">
+          <label className="form-label">Max price</label>
+          <DropdownList
+            className="form-control p-0"
+            containerClassName="w-100"
+            data={priceOptions}
+            value={
+              priceOptions.find((o) => o.value === filters.maxPrice) || null
+            }
+            onChange={(val) =>
+              handleFilterChange("maxPrice", val ? val.value : "")
+            }
+            textField="label"
+            placeholder="Max price"
+          />
+        </div>
+        <div className="col-md-2">
+          <label className="form-label">Min bedrooms</label>
+          <DropdownList
+            className="form-control p-0"
+            containerClassName="w-100"
+            data={bedroomOptions}
+            value={
+              bedroomOptions.find((o) => o.value === filters.minBedrooms) ||
+              null
+            }
+            onChange={(val) =>
+              handleFilterChange("minBedrooms", val ? val.value : "")
+            }
+            textField="label"
+            placeholder="Min bedrooms"
+          />
+        </div>
+        <div className="col-md-2">
+          <label className="form-label">Max bedrooms</label>
+          <DropdownList
+            className="form-control p-0"
+            containerClassName="w-100"
+            data={bedroomOptions}
+            value={
+              bedroomOptions.find((o) => o.value === filters.maxBedrooms) ||
+              null
+            }
+            onChange={(val) =>
+              handleFilterChange("maxBedrooms", val ? val.value : "")
+            }
+            textField="label"
+            placeholder="Max bedrooms"
+          />
+        </div>
+        <div className="col-md-2">
+          <label className="form-label">Added to site</label>
+          <DropdownList
+            className="form-control p-0"
+            containerClassName="w-100"
+            data={dateOptions}
+            value={
+              dateOptions.find((o) => o.value === filters.dateAdded) || null
+            }
+            onChange={(val) =>
+              handleFilterChange("dateAdded", val ? val.value : "")
+            }
+            textField="label"
+            placeholder="Any"
           />
         </div>
       </div>
 
-      {/* Row 2: Postcode + Bedrooms */}
-      <div className="row g-4 mb-3">
+      {/* Row 2: Postcode + Location */}
+      <div className="row g-3 mb-3 align-items-end">
         <div className="col-md-4">
-          <label htmlFor={`postcode-area-${variant}`} className="form-label">
-            Postcode area
-          </label>
-          <input
-            id={`postcode-area-${variant}`}
-            type="text"
+          <label className="form-label">Postcode area</label>
+          <Combobox
+            className="form-control p-0"
+            data={postcodeList}
+            id="postcode-full"
             value={filters.postcodeArea}
-            onChange={(e) => handleFilterChange("postcodeArea", e.target.value)}
-            className="form-control"
+            onChange={(val) => handleFilterChange("postcodeArea", val || "")}
             placeholder="e.g. SW1"
           />
         </div>
-
         <div className="col-md-8">
-          <RangeSelect
-            label="Bedrooms"
-            minValue={filters.minBedrooms}
-            maxValue={filters.maxBedrooms}
-            onMinChange={(e) =>
-              handleFilterChange("minBedrooms", e.target.value)
-            }
-            onMaxChange={(e) =>
-              handleFilterChange("maxBedrooms", e.target.value)
-            }
-            options={bedroomOptions}
-            minPlaceholder="Min bedrooms"
-            maxPlaceholder="Max bedrooms"
-          />
-        </div>
-      </div>
-
-      {/* Row 3: Added + Location */}
-      <div className="row g-4 align-items-end">
-        <div className="col-md-4">
-          <FormSelect
-            id={`added-${variant}`}
-            label="Added to site"
-            value={filters.dateAdded}
-            onChange={(e) => handleFilterChange("dateAdded", e.target.value)}
-            options={dateOptions}
-            placeholder="Any"
-          />
-        </div>
-
-        <div className="col-md-8">
-          <label htmlFor={`location-${variant}`} className="form-label">
-            Location
-          </label>
+          <label className="form-label">Location</label>
           <div className="input-group">
-            <input
-              type="text"
-              id={`location-${variant}`}
-              name="location"
+            <Combobox
+              className="form-control p-0"
+              containerClassName="w-100"
+              data={locationList}
               value={filters.location}
-              onChange={(e) => handleFilterChange("location", e.target.value)}
-              className="form-control"
+              onChange={(val) => handleFilterChange("location", val || "")}
               placeholder="Ex. London, Edinburgh"
             />
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary input-group-text">
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>

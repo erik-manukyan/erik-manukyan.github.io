@@ -18,6 +18,8 @@
         "images/prop1/prop1image7.png",
         "images/prop1/prop1image8.png"
       ],
+      "floorPlan": "images/prop1/prop1plan.png",
+      "map": { "lat": 51.3888, "lng": 0.0740 },
       "url": "properties/prop1.html",
       "added": {
         "month": "October",
@@ -41,6 +43,8 @@
         "images/prop2/prop2image5.png",
         "images/prop2/prop2image6.png"
       ],
+      "floorPlan": "images/prop2/prop2plan.png",
+      "map": { "lat": 51.3750, "lng": 0.0920 },
       "url": "properties/prop2.html",
       "added": {
         "month": "September",
@@ -64,6 +68,8 @@
         "images/prop3/prop3image5.png",
         "images/prop3/prop3image6.png"
       ],
+      "floorPlan": "images/prop3/prop3plan.png",
+      "map": { "lat": 51.4170, "lng": 0.0690 },
       "url": "properties/prop3.html",
       "added": {
         "month": "November",
@@ -87,6 +93,8 @@
         "images/prop4/prop4image5.png",
         "images/prop4/prop4image6.png"
       ],
+      "floorPlan": "images/prop4/prop4plan.png",
+      "map": { "lat": 51.4055, "lng": 0.0150 },
       "url": "properties/prop4.html",
       "added": {
         "month": "August",
@@ -111,6 +119,8 @@
         "images/prop5/prop5image6.png",
         "images/prop5/prop5image7.png"
       ],
+      "floorPlan": "images/prop5/prop5plan.png",
+      "map": { "lat": 51.4089, "lng": -0.0250 },
       "url": "properties/prop5.html",
       "added": {
         "month": "July",
@@ -135,6 +145,8 @@
         "images/prop6/prop6image6.png",
         "images/prop6/prop6image7.png"
       ],
+      "floorPlan": "images/prop6/prop6plan.png",
+      "map": { "lat": 51.3770, "lng": -0.0150 },
       "url": "properties/prop6.html",
       "added": {
         "month": "October",
@@ -152,13 +164,15 @@
       "location": "Lewisham Road, London SE13",
       "images": [
         "images/prop7/prop7image1.png",
-        "images/prop1/prop7image2.png",
-        "images/prop1/prop7image3.png",
-        "images/prop1/prop7image4.png",
-        "images/prop1/prop7image5.png",
-        "images/prop1/prop7image6.png",
-        "images/prop1/prop7image7.png"
+        "images/prop7/prop7image2.png",
+        "images/prop7/prop7image3.png",
+        "images/prop7/prop7image4.png",
+        "images/prop7/prop7image5.png",
+        "images/prop7/prop7image6.png",
+        "images/prop7/prop7image7.png"
       ],
+      "floorPlan": "images/prop7/prop7plan.png",
+      "map": { "lat": 51.4613, "lng": -0.0133 },
       "url": "properties/prop7.html",
       "added": {
         "month": "September",
@@ -168,3 +182,4 @@
     }
   ]
 }
+
