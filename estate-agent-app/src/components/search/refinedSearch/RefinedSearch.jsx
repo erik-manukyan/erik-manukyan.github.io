@@ -1,11 +1,8 @@
-import SearchFiltersForm from "./SearchFiltersForm";
+import SearchFiltersForm from "../SearchFiltersForm";
 import "./RefinedSearch.css";
 export default function RefinedSearch() {
   return (
-    <div
-      className="refined-search-container refined-search-enter"
-   
-    >
+    <div className="refined-search-container refined-search-enter">
       <div className="container text-start p-0">
         <section className="text-center mt-4">
           <h3>Refined search for your future home</h3>

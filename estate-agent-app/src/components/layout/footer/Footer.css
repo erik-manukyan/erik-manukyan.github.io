@@ -1,0 +1,19 @@
+.site-footer {
+  --footer-accent: #0d6efd; /* Bootstrap primary */
+  /* Use flex layout to keep footer at the bottom when content is short */
+  margin-top: auto;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-link {
+  color: #adb5bd; /* muted */
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+  color: var(--footer-accent);
+  transform: translateY(-2px);
+  text-decoration: none;
+}

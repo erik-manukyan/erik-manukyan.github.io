@@ -1,5 +1,5 @@
 import { useFilters } from "../../hooks/useFilters";
-import "./RefinedSearch.css";
+import "./refinedSearch/RefinedSearch";
 
 export default function SearchBox() {
   const { setShowFilters, filters, handleFilterChange } = useFilters();

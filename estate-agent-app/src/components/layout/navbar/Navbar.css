@@ -1,0 +1,31 @@
+.navbar-smooth {
+  background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%);
+  transition: transform 220ms ease, box-shadow 200ms ease;
+}
+
+.navbar-smooth .nav-link {
+  color: #0d6efd; /* Bootstrap primary */
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.navbar-smooth .nav-link:hover,
+.navbar-smooth .nav-link:focus {
+  color: #0b5ed7;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* Slightly reduce brand padding on small screens */
+.navbar-brand img {
+  max-height: 64px;
+}
+
+/* hide/show classes for scroll behavior */
+.navbar-hidden {
+  transform: translateY(-120%);
+  pointer-events: none; /* prevent interaction while hidden */
+}
+
+.navbar-visible {
+  transform: translateY(0%);
+}

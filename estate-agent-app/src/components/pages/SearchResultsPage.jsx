@@ -1,4 +1,4 @@
-import Gallery from "../properties/Gallery";
+import Gallery from "../properties/gallery/Gallery";
 import Favourites from "../favourites/Favourites";
 import {
   DndContext,
@@ -11,7 +11,7 @@ import {
 import { snapCenterToCursor, restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useFavourites } from "../../hooks/useFavourites";
 import { useState } from "react";
-import ImageCard from "../properties/ImageCard";
+import ImageCard from "../properties/imagecard/ImageCard";
 import SearchFiltersForm from "../search/SearchFiltersForm";
 
 export default function SearchResultsPage() {
@@ -53,9 +53,7 @@ export default function SearchResultsPage() {
   return (
     <>
       {/* MiniSearch - centered via Bootstrap */}
-      <div className="d-flex justify-content-center py-3">
-        <SearchFiltersForm variant="mini" />
-      </div>
+      <SearchFiltersForm variant="mini" />
       <DndContext
         sensors={sensors}
         collisionDetection={pointerWithin}

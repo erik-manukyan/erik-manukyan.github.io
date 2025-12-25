@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useFavourites } from "../../hooks/useFavourites";
+import { useFavourites } from "../../../hooks/useFavourites";
 import "./ImageCard.css";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
@@ -20,6 +20,13 @@ export default function ImageCard({ property, isMini = false }) {
   const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
   const sentences = [...segmenter.segment(description)];
   const { addFavourite, isFavourite, removeFavourite } = useFavourites();
+
+  const toggleFavourite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isFavourite(property.id)) removeFavourite(property.id);
+    else addFavourite(property);
+  };
 
   // Make cards draggable
   const { attributes, listeners, setNodeRef, transform, isDragging } =
@@ -74,14 +81,9 @@ export default function ImageCard({ property, isMini = false }) {
 
           {/* Favourite Button - Top Right */}
           <button
+            type="button"
             onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              isFavourite(property.id)
-                ? removeFavourite(property.id)
-                : addFavourite(property);
-            }}
+            onClick={toggleFavourite}
             className="btn position-absolute top-0 end-0 m-1 p-0 favourite-btn"
           >
             <i
@@ -115,23 +117,23 @@ export default function ImageCard({ property, isMini = false }) {
       {...listeners}
       {...attributes}
       style={dragStyle}
-      className={`card border-0 shadow-sm h-100 my-2 overflow-hidden image-card ${
+      className={`card border-0 shadow-sm my-2 overflow-hidden image-card ${
         isDragging ? "dragging" : ""
       }`}
     >
-      <div className="row g-0 h-100">
+      <div className="row g-0 ">
         {/* Image Column */}
         <div className="col-md-4 position-relative">
           <img
             src={`/${images[0]}`}
             alt={`${type} in ${location}`}
-            className="w-100 h-100 image-card-img"
+            className="w-100 image-card-img"
           />
-          {/* Price Badge Overlay */}
-          <div className="position-absolute bottom-0 start-0 w-100 p-2 image-card-gradient">
-            <span className="badge bg-primary fs-6 px-3 py-2">
-              £{price.toLocaleString()}
-            </span>
+          {/* Price Bar Overlay (full width, bottom) */}
+          <div className="position-absolute bottom-0 start-0 w-100 image-card-gradient">
+            <div className="image-card-price d-flex justify-content-end align-items-center">
+              <span className="fw-semibold">£{price.toLocaleString()}</span>
+            </div>
           </div>
         </div>
 
@@ -139,14 +141,9 @@ export default function ImageCard({ property, isMini = false }) {
         <div className="col-md-8 d-flex flex-column position-relative">
           {/* Favourite Button - Top Right */}
           <button
+            type="button"
             onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              isFavourite(property.id)
-                ? removeFavourite(property.id)
-                : addFavourite(property);
-            }}
+            onClick={toggleFavourite}
             className="btn position-absolute top-0 end-0 m-2 p-0 favourite-btn"
           >
             <i
@@ -168,7 +165,7 @@ export default function ImageCard({ property, isMini = false }) {
               }`}
             >
               <i className="fa-solid fa-location-dot text-danger mt-1"></i>
-              <span className="text-truncate">{location}</span>
+              <span className="text-truncate pb-1">{location}</span>
             </h5>
 
             {!isMini && (
@@ -195,7 +192,7 @@ export default function ImageCard({ property, isMini = false }) {
                     .map((s) => s.segment)
                     .join("")}
                 </p>
-                {/* Footer */}{" "}
+                {/* Footer */}
                 <Link
                   to={`/properties/${property.id}`}
                   className="text-decoration-none"

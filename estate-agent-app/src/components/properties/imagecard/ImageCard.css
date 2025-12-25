@@ -1,12 +1,12 @@
 .image-card {
-  transition: transform 0.2s, box-shadow 0.2s;
-  min-height: 220px;
+  transition: transform 0.18s, box-shadow 0.18s;
+  min-height: 180px; /* slightly smaller cards for tighter layout */
   cursor: grab;
 }
 
 .image-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 0.4rem 0.9rem rgba(0, 0, 0, 0.12) !important;
 }
 
 .image-card.dragging {
@@ -14,25 +14,60 @@
 }
 
 .image-card-img {
-  min-height: 220px;
-  max-height: 220px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+/* Make the internal row and columns stretch to match the card height so images fill it */
+.image-card > .row {
+  height: 100%;
+}
+
+.image-card .col-md-4,
+.image-card .col-md-8 {
+  height: 100%;
+}
+
+/* Ensure the image column has no extra padding so the image fills edge-to-edge */
+.image-card .col-md-4 {
+  padding: 0;
 }
 
 .image-card-gradient {
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  /* Subtle bottom-to-top gradient so bottom overlay reads against bright images */
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.35));
+}
+
+/* Full-width price bar that sits at the bottom of the image */
+.image-card-price {
+  background: var(--bs-primary);
+  color: #fff;
+  padding: 0.45rem 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.95rem;
+  border-bottom-left-radius: 0.35rem;
+  border-bottom-right-radius: 0.35rem;
+}
+
+.image-card-price .fw-semibold {
+  color: #fff;
 }
 
 .image-card-description {
   display: -webkit-box;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 4.5em;
+  min-height: 3.2em;
 }
 
 /* Mini Card */
 .image-card-mini {
-  height: 80px;
+  height: 72px;
   background-size: cover;
   background-position: center;
   cursor: grab;
@@ -66,12 +101,12 @@
 
 /* Skeleton Card */
 .skeleton-card {
-  min-height: 220px;
+  min-height: 160px;
   overflow: hidden;
 }
 
 .skeleton-image {
-  height: 180px;
+  height: 140px;
   background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;

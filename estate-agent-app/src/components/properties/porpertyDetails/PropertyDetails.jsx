@@ -1,28 +1,23 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import "./PropertyDetails.css";
+import { useProperties } from "../../../hooks/useProperties";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css"; // Default styling
-import { useFavourites } from "../../hooks/useFavourites";
+import { useFavourites } from "../../../hooks/useFavourites";
 
 export default function PropertyDetails() {
   const { id } = useParams();
-  const [property, setProperty] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { properties, loading, error } = useProperties();
+  const property = useMemo(
+    () => properties.find((p) => p.id === id) || null,
+    [properties, id]
+  );
   const [activeIndex, setActiveIndex] = useState(0);
   const [showAdded, setShowAdded] = useState(false);
   const { addFavourite } = useFavourites();
 
-  useEffect(() => {
-    const fetchProperty = async () => {
-      const response = await fetch("/properties.json");
-      const data = await response.json();
-      const found = data.properties.find((p) => p.id === id);
-      setProperty(found);
-      setLoading(false);
-    };
-    fetchProperty();
-  }, [id]);
+  if (error) console.error("Failed to load properties.json:", error);
 
   if (loading) {
     return (
