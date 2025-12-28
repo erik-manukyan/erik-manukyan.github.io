@@ -211,7 +211,7 @@ export default function PropertyDetails() {
               ) : (
                 <p className="text-muted">Map not available.</p>
               )}
-            </TabPanel>
+            </TabPanel> 
           </Tabs>
         </div>
       </div>
