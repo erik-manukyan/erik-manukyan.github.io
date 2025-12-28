@@ -1,0 +1,24 @@
+# Exclude our-app folder (practice/learning code)
+our-app/
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage (disabled per user request)
+coverage/
