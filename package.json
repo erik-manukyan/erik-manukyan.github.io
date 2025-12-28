@@ -2,7 +2,7 @@
   "name": "estate-agent-app",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://erik-manukyan.github.io/Estate_Agency_App",
+  "homepage": "https://erik-manukyan.github.io",
   "type": "module",
   "scripts": {
     "dev": "vite",
