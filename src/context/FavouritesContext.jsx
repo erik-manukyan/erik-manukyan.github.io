@@ -1,5 +1,5 @@
-import { useState } from "react";
-import {FavouritesContext} from "./favouritesContext"
+import React, { useState } from "react";
+import { FavouritesContext } from "./favouritesContext";
 
 export function FavouritesProvider({ children }) {
   const [favourites, setFavourites] = useState([]);
