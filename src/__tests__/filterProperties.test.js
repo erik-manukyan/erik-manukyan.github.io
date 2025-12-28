@@ -1,4 +1,5 @@
-// Unit tests for the filterProperties helper — cover combinations of criteria.
+// Unit tests for the filterProperties helper — re-added after accidental deletion.
+// These tests verify basic combinations of filter criteria work as expected.
 import { filterProperties } from "../utils/filterProperties";
 
 const props = [

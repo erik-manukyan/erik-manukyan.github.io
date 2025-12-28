@@ -1,5 +1,5 @@
 // Component test for Gallery (moved to .jsx extension)
-import React from "react";
+import React from "react"; // ensure JSX transforms work in the test environment
 import { render } from "@testing-library/react";
 import Gallery from "../components/properties/gallery/Gallery";
 import * as useProps from "../hooks/useProperties";

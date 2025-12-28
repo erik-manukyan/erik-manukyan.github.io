@@ -1,6 +1,6 @@
 // Tests for Favourites context (moved to .jsx to ensure JSX parsing is handled correctly).
-import React from "react";
-import { renderHook, act } from "@testing-library/react";
+import React, { act } from "react"; // Import React and act from React to avoid react-dom/test-utils deprecation
+import { renderHook } from "@testing-library/react";
 import { FavouritesProvider } from "../context/FavouritesContext";
 import { useFavourites } from "../hooks/useFavourites";
 

@@ -1,5 +1,5 @@
 // Integration-style test for useProperties hook (moved to .jsx)
-import React from "react";
+import React from "react"; // ensure JSX works inside the test
 import { render, screen, waitFor } from "@testing-library/react";
 import { useProperties } from "../hooks/useProperties";
 
